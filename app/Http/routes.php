@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+
+Route::get('registro', ['uses' => 'RegistryController@index']);
+
+Route::post('registro', ['uses' => 'RegistryController@store']);
