@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 
 
-Route::get('registro', ['uses' => 'RegistryController@index']);
+Route::get('asistentes', ['uses' => 'RegistryController@index']);
+Route::get('registro', ['uses' => 'RegistryController@create']);
 
 Route::post('registro', ['uses' => 'RegistryController@store']);

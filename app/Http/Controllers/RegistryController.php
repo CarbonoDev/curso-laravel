@@ -17,7 +17,8 @@ class RegistryController extends Controller
      */
     public function index()
     {
-        return view('registro');
+        $attendants = Attendant::all();
+        return view('asistentes', compact('attendants'));
     }
 
     /**
@@ -27,7 +28,7 @@ class RegistryController extends Controller
      */
     public function create()
     {
-        //
+        return view('registro');
     }
 
     /**
