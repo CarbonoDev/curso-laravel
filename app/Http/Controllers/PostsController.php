@@ -91,6 +91,6 @@ class PostsController extends Controller
         // TODO: Validación
         // guardaar a base de datos
         
-        return redirect('posts')->withSuccess('Publicación borrado!');
+        return redirect()->route('posts.index')->withSuccess('Publicación borrado!');
     }
 }
