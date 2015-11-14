@@ -3,16 +3,24 @@
 @section('content')
 <section class="row">
 	<article class="col-sm-6 col-sm-offset-3">
-		<h1>Título 1</h1>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla sed accusamus dolorum animi doloremque. Voluptates ducimus qui, vitae officia est ipsum molestias enim velit, quos, perferendis aperiam rerum, tenetur dicta?</p>
-		<span class="date">07/11/2015</span>
+		<h1>{{ $post->title }}</h1>
+		@if($post->image)
+			<img src="{{ $post->image }}" alt="">
+		@endif
+		<div>
+			{!! Markdown::text($post->content) !!}
+		</div>
+		<span class="date">{{ $post->created_at }}</span>
 		<span class="action-buttons">
-			<a href="{{ route('posts.edit', [1]) }}" 
+			@can('update', $post)
+			<a href="{{ route('posts.edit', [$post->slug?: $post->id]) }}" 
 				class="edit-button btn btn-info">
 					<i class="fa fa-pencil"></i> 
 					Editar
 			</a>
-			<form action="{{ route('posts.destroy', [1]) }}" method="POST">
+			@endcan
+			@can('destroy', $post)
+			<form action="{{ route('posts.destroy', [$post->slug?: $post->id]) }}" method="POST">
 				{{ csrf_field() }}
 				{{ method_field('DELETE') }}
 				<button type="submit" class="delete-button btn btn-danger">
@@ -20,6 +28,7 @@
 					Borrar
 				</button>
 			</form>
+			@endcan
 		</span>
 	</article>
 </section>

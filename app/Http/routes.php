@@ -15,40 +15,57 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('posts',[
-  'as' => 'posts.index',
-	'uses' => 'PostsController@index'
-	]);
+Route::group([
+    'prefix' => 'posts',
+    'middleware' => 'auth'
+  ], function () {
+    Route::get('/', [
+      'as' => 'posts.index',
+      'uses' => 'PostsController@index'
+      ]);
 
-Route::post('posts',[
-  'as' => 'posts.store',
-	'uses' => 'PostsController@store'
-	]);
+    Route::get('me', [
+      'as' => 'posts.my_posts',
+      'uses' => 'PostsController@myPosts'
+      ]);
 
-Route::get('posts/create',[
-  'as' => 'posts.create',
-	'uses' => 'PostsController@create'
-	]);
+    Route::post('{post_id?}', [
+      'as' => 'posts.process',
+      'uses' => 'PostsController@process'
+      ]);
 
-Route::get('posts/{id}',[
-  'as' => 'posts.show',
-	'uses' => 'PostsController@show'
-	]);
+    Route::get('create', [
+      'as' => 'posts.create',
+      'uses' => 'PostsController@create'
+      ]);
 
-Route::get('posts/{id}/edit',[
-  'as' => 'posts.edit',
-	'uses' => 'PostsController@edit'
-	]);
+    Route::get('{post_id}', [
+      'as' => 'posts.show',
+      'uses' => 'PostsController@show'
+      ]);
 
-Route::post('posts/{id}',[
-  'as' => 'posts.update',
-	'uses' => 'PostsController@update'
-	]);
-
-Route::delete('posts/{id}',[
-  'as' => 'posts.destroy',
-	'uses' => 'PostsController@destroy'
-	]);
-
+    Route::get('{post_id}/edit', [
+      'as' => 'posts.edit',
+      'uses' => 'PostsController@edit'
+      ]);
 
 
+    Route::delete('{post_id}', [
+      'as' => 'posts.destroy',
+      'uses' => 'PostsController@destroy'
+      ]);
+
+    Route::model('post_id', 'App\Post');
+
+});
+
+Route::group(['prefix' => 'auth'], function () {
+  // Authentication routes...
+    Route::get('login', 'Auth\AuthController@getLogin');
+    Route::post('login', 'Auth\AuthController@postLogin');
+    Route::get('logout', 'Auth\AuthController@getLogout');
+
+    // Registration routes...
+    Route::get('register', 'Auth\AuthController@getRegister');
+    Route::post('register', 'Auth\AuthController@postRegister');
+});

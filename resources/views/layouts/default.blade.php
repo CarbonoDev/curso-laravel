@@ -22,7 +22,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>
-      body {padding-top: 50px;}
+      body {padding-top: 80px;}
     </style>
   </head>
   <body>
@@ -42,18 +42,29 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li><a href="{{ route('posts.index') }}">Home</a></li>
+            <li><a href="{{ route('posts.my_posts') }}">Mis Publicaciones</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            {{-- <li><a href="/login">Login</a></li> --}}
-            {{-- <li><a href="/register">Register</a></li> --}}
-            {{-- <li class="active"><a href="/logout">Logout</span></a></li> --}}
+            @if($current_user)
+              <li>Bienvenido {{ $current_user->name }}</li>
+              <li><a href='{{ url("auth/logout") }}'>Logout</span></a></li>
+            @else
+              <li><a href='{{ url("auth/login") }}'>Login</a></li>
+              <li><a href='{{ url("auth/register") }}'>Register</a></li>
+            @endif
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
+
+      @if(session('success')) 
+      <div class="row">
+        <div class="alert alert-success">{{ session('success') }}</div>
+      </div>
+      @endif
 
       @yield('content')
 
