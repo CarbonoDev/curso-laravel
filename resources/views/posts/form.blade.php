@@ -10,7 +10,7 @@
 			</div>
 
 			<div class="form-group">
-				<textarea class="form-control" type="textarea" id="message" placeholder="Message" rows="7"></textarea>
+				<textarea class="form-control" type="textarea" id="message" name="message" placeholder="Message" rows="7"></textarea>
 			</div>
 			
 			<button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">
